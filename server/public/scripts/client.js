@@ -19,7 +19,11 @@ function appendTasks() {
         console.log('back from server with', response);
         for (let i = 0; i < response.length; i++) {
             el.append(`
-                <li>Task: ${response[i].task_name}</li>
+                <tr data-id=${response[i].id}>
+                <td>Task: ${response[i].task_name}</td>
+                <td></td>
+                <td><button type="submit" class="delete">Delete</button></td>
+                </tr>
                 `);
     }
     }).catch(function(error) {
