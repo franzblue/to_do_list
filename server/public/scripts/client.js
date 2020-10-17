@@ -61,7 +61,7 @@ function deleteTask() {
 
 // function to bundle inputs into object
 function makeTask() {
-    // validation needed --- no blank inputs allowed
+    // validation needed --- no blank inputs allowed ******************
     console.log('in makeTask');
     let taskObject = {
         task_name: $('#toDoInput').val(),

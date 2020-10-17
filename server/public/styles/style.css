@@ -1,5 +1,10 @@
+header {
+  text-align: center;
+    background-color: #00acb0;
+}
+
 table, th, td {
-    text-align: left;
+    text-align: center;
     border: 1px solid black;
     border-collapse: collapse;
     padding: 5px;
@@ -10,10 +15,10 @@ table th {
     font-weight: normal;
   }
   
-  table tr:nth-child(even) {
-    background-color: #efefef;
-  }
-  
-  table tr:nth-child(odd) {
-    background-color: #ffffff;
-  }
+table tr:nth-child(even) {
+  background-color: #efefef;
+}
+
+table tr:nth-child(odd) {
+  background-color: #ffffff;
+}
