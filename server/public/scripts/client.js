@@ -4,41 +4,46 @@ $(document).ready(onReady);
 
 function onReady() {
     console.log('hello from jq');
+    getTasks();
     $('#submit').on('click', makeTask);
     $('#toDoList').on('click', '.deleteBtn', deleteTask);
     $('#toDoList').on('click', '.completeBtn', updateCompleted);
-    appendTasks();
+    
 }
 
+
+
+function getTasks(){
+    console.log('in GET tasks');
+    $.ajax({
+        method: 'GET',
+        url: '/tasks'
+    }).then(function (response){
+        console.log('response from GET server:', response);
+        appendTasks(response);
+    }).catch(function(error){
+        console.log(error);
+    });
+}
+
+
 // function to GET taks list and append it to DOM
-function appendTasks() {
+function appendTasks(array) {
     console.log('in appendTasks');
     let el = $('#toDoList');
     el.empty();
-    $.ajax( {
-        method: 'GET',
-        url: '/tasks'
-    }).then( function (response) {
-        console.log('back from server with', response);
-        for (let i = 0; i < response.length; i++) {
-            el.append(`
-                <tr data-id=${response[i].id}>
-                <td>${response[i].task_name}</td>
-                <td></td>
-                <td><button type="submit" class="deleteBtn">Delete</button></td>
-                <td><button type="submit" class="completeBtn">Click when Completed</button></td>
-                </tr>
-                `);
+    for (let i = 0; i < array.length; i++) {
+        // if(${array[i].id} === true){ toggle.class ???}
+        el.append(`
+            <tr data-id=${array[i].id}>
+            <td>${array[i].task_name}</td>
+            <td></td>
+            <td><button type="submit" class="deleteBtn">Delete</button></td>
+            <td><button type="submit" class="completeBtn">Click when Completed</button></td>
+            </tr>
+            `);
     }
-    }).catch(function(error) {
-    console.log('error', error);
-    res.sendStatus(500)
-    });
-        }
-// I should seperate this function into two
-// getTasks and appendTasks
-
-
+}
 
 // function to delete appended rows
 function deleteTask() {
@@ -50,7 +55,7 @@ function deleteTask() {
     }).then(function(response){
         console.log(' delete server response', response);
         // append new task list
-        appendTasks();
+        getTasks();
     }).catch(function(error){
         console.log(error);
     });
@@ -77,13 +82,12 @@ function addTask(taskObject) {
         data: taskObject
     }).then(function(response) {
         console.log('back from server with ', response);
-        appendTasks();
+        getTasks();
     }).catch(function(error) {
         console.log('error', error);
         alert('error');
 });
 }
-
 
 function updateCompleted(){
     let id = $(this).closest('tr').data('id');
@@ -95,7 +99,7 @@ function updateCompleted(){
         data: {completed: true}
     }).then(function(response){
         console.log(response);
-        appendTasks();
+        getTasks();
     }).catch(function(error){
         console.log(error);
     });
