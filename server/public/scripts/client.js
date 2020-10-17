@@ -11,8 +11,6 @@ function onReady() {
     
 }
 
-
-
 function getTasks(){
     console.log('in GET tasks');
     $.ajax({
@@ -26,7 +24,6 @@ function getTasks(){
     });
 }
 
-
 // function to GET taks list and append it to DOM
 function appendTasks(array) {
     console.log('in appendTasks');
@@ -34,6 +31,7 @@ function appendTasks(array) {
     el.empty();
     for (let i = 0; i < array.length; i++) {
         // if(${array[i].id} === true){ toggle.class ???}
+        // you can add a second data table effect if completed
         el.append(`
             <tr data-id=${array[i].id}>
             <td>${array[i].task_name}</td>

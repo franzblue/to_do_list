@@ -2,9 +2,9 @@
     - [x] allow user to create task
     - [x] stored inside of DB
     - [x] front end refresh after new entry
-    - [] option to complete or delete each entry
+    - [x] option to complete or delete each entry
     - [] when completed, show visually that task is complete
-    - [] whether a task is complete or not should be stored in DB
+    - [x] whether a task is complete or not should be stored in DB
     - [x] Deleting should remove task from DOM and DB
 
 ## STYLING
