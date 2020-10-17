@@ -6,7 +6,7 @@ const pool = require('../modules/pool');
 // POST
 router.post('/', (req, res) => {
     console.log('in /tasks POST with:', req.body);
-    let newTask = req.body
+    let newTask = req.body;
     console.log(newTask, newTask.task_name, newTask.completed);
     const queryText = `INSERT INTO "tasks"("task_name", "completed") 
                                 VALUES($1, $2);`;
@@ -34,6 +34,17 @@ router.get('/', (req, res) => {
   });
 
 // DELETE
+router.delete('/:id', (req, res) => {
+  let taskId = req.params.id;
+  let queryText = `DELETE FROM "tasks" WHERE "id" = $1;`;
+  pool.query(queryText, [taskId]).then((result) => {
+      console.log(result);
+      res.sendStatus(200);
+  }).catch((error) => {
+      console.log('error in delete', error);
+      res.sendStatus(500);
+  });
+});
 
 
 // PUT

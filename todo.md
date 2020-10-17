@@ -13,7 +13,8 @@
     - [] text color and or background color of tasks
 
 ## DATABASE
-- [] 'weekend-to-do-app'
+    - [] 'weekend-to-do-app'
+    - []  maybe reset database to reset id numbers ???
 
 
 
