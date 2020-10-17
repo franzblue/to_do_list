@@ -26,26 +26,28 @@ function appendTasks() {
     console.log('error', error);
     res.sendStatus(500)
     });
-        } // end getKoalas
+        }
 
 function makeTask() {
-    console.log('in addTask');
+    console.log('in makeTask');
     let taskObject = {
-        task: $('#toDoInput').val(),
+        task_name: $('#toDoInput').val(),
         completed: false
     }
-    console.log(taskObject);
+    console.log('taskObject is:', taskObject);
        addTask(taskObject);
 }
  
 
 function addTask(taskObject) {
+    console.log('in addTask, sending to server:', taskObject);
     $.ajax( {
         method: 'POST',
         url: '/tasks',
-        data: {taskObject}
+        data: taskObject
     }).then(function(response) {
         console.log('back from server with ', response);
+        appendTasks();
     }).catch(function(error) {
         console.log('error', error);
         alert('error');

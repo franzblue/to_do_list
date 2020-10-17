@@ -6,13 +6,14 @@ const pool = require('../modules/pool');
 // POST
 router.post('/', (req, res) => {
     console.log('in /tasks POST with:', req.body);
-    let taskToAdd = req.body;
+    let newTask = req.body
+    console.log(newTask, newTask.task_name, newTask.completed);
     const queryText = `INSERT INTO "tasks"("task_name", "completed") 
                                 VALUES($1, $2);`;
-    pool.query(queryText, [taskToAdd.task, taskToAdd.completed])
+    pool.query(queryText, [newTask.task_name, newTask.completed])
     .then((response) => {
         console.log('response from database', response);
-        res.sendStatus(201);
+        res.sendStatus(200);
     }).catch((error) => {
         console.log('error in POST server', error);
         res.sendStatus(500);
