@@ -6,6 +6,7 @@ function onReady() {
     console.log('hello from jq');
     $('#submit').on('click', makeTask);
     $('#toDoList').on('click', '.deleteBtn', deleteTask);
+    $('#toDoList').on('click', '.completeBtn', updateCompleted);
     appendTasks();
 }
 
@@ -25,6 +26,7 @@ function appendTasks() {
                 <td>${response[i].task_name}</td>
                 <td></td>
                 <td><button type="submit" class="deleteBtn">Delete</button></td>
+                <td><button type="submit" class="completeBtn">Click when Completed</button></td>
                 </tr>
                 `);
     }
@@ -33,6 +35,10 @@ function appendTasks() {
     res.sendStatus(500)
     });
         }
+// I should seperate this function into two
+// getTasks and appendTasks
+
+
 
 // function to delete appended rows
 function deleteTask() {
@@ -76,4 +82,21 @@ function addTask(taskObject) {
         console.log('error', error);
         alert('error');
 });
+}
+
+
+function updateCompleted(){
+    let id = $(this).closest('tr').data('id');
+    console.log('in PUT request with:', id);
+
+    $.ajax({
+        method: 'PUT',
+        url:`/tasks/completedYet/${id}`,
+        data: {completed: true}
+    }).then(function(response){
+        console.log(response);
+        appendTasks();
+    }).catch(function(error){
+        console.log(error);
+    });
 }

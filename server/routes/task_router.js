@@ -48,7 +48,20 @@ router.delete('/:id', (req, res) => {
 
 
 // PUT
+router.put('/completedYet/:id', (req, res) => {
+  let id = req.params.id;
+  let completed = req.body.completed;
 
+  let queryText = `UPDATE "tasks" SET "completed" = $1 WHERE "id" = $2;`;
+
+  pool.query(queryText, [completed, id]).then((result) => {
+      console.log(result);
+      res.sendStatus(200);
+  }).catch((error) => {
+      console.log('error in post', error);
+      res.sendStatus(500);
+  });
+});
 
 //this is the same for all route modules
 module.exports = router;
