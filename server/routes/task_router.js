@@ -7,8 +7,8 @@ const pool = require('../modules/pool');
 router.post('/', (req, res) => {
     console.log('in /tasks POST with:', req.body);
     let taskToAdd = req.body;
-    const queryText = `INSERT INTO "tasks" ("task_name", "completed") 
-                                VALUES ($1, $2);`;
+    const queryText = `INSERT INTO "tasks"("task_name", "completed") 
+                                VALUES($1, $2);`;
     pool.query(queryText, [taskToAdd.task, taskToAdd.completed])
     .then((response) => {
         console.log('response from database', response);
@@ -20,7 +20,17 @@ router.post('/', (req, res) => {
 });
 
 // GET
-
+router.get('/', (req, res) => {
+    let queryText = 'SELECT * FROM "tasks" ORDER BY "completed";';
+    pool.query(queryText).then((result) => {
+      // Sends back the results in an object
+      res.send(result.rows);
+    })
+    .catch(error => {
+      console.log('error getting books', error);
+      res.sendStatus(500);
+    });
+  });
 
 // DELETE
 
