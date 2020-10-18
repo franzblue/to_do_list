@@ -12,19 +12,20 @@ function onReady() {
     $('#toDoList').on('click', '.completeBtn', updateCompleted);
 }
 
-function getTasks(){
-    console.log('in GET tasks');
-    // GET tasks list
-    $.ajax({
-        method: 'GET',
-        url: '/tasks'
-    }).then(function (response){
-        console.log('response from GET server:', response);
-        // append list to DOM
-        appendTasks(response);
-    }).catch(function(error){
-        console.log(error);
-    });
+// function to POST input object to server
+function addTask(taskObject) {
+    console.log('in addTask, sending to server: ', taskObject);
+    $.ajax( {
+        method: 'POST',
+        url: '/tasks',
+        data: taskObject
+    }).then(function(response) {
+        console.log('back from server with ', response);
+        getTasks();
+    }).catch(function(error) {
+        console.log('error', error);
+        alert('error');
+});
 }
 
 // append to DOM
@@ -76,9 +77,24 @@ function deleteTask() {
     });
 }
 
+// function to GET task list from databse
+function getTasks(){
+    console.log('in GET tasks');
+    // GET tasks list
+    $.ajax({
+        method: 'GET',
+        url: '/tasks'
+    }).then(function (response){
+        console.log('response from GET server:', response);
+        // append list to DOM
+        appendTasks(response);
+    }).catch(function(error){
+        console.log(error);
+    });
+}
+
 // function to bundle inputs into object
 function makeTask() {
-    // validation needed --- no blank inputs allowed ******************
     if($('#toDoInput').val() === '' || $('#toDoInput').val() === 0 || $('#toDoInput').val() === null) {
         console.log('toDoInput field empty');
         alert('Input field is empty')
@@ -92,25 +108,11 @@ function makeTask() {
         completed: false
     }
     console.log('taskObject is:', taskObject);
+    // clear input field
+    $('#toDoInput').val('');
     // feed taskObject into database
     addTask(taskObject);
     }
-}
- 
-// function to POST input object to server
-function addTask(taskObject) {
-    console.log('in addTask, sending to server: ', taskObject);
-    $.ajax( {
-        method: 'POST',
-        url: '/tasks',
-        data: taskObject
-    }).then(function(response) {
-        console.log('back from server with ', response);
-        getTasks();
-    }).catch(function(error) {
-        console.log('error', error);
-        alert('error');
-});
 }
 
 // click event to change task to completed = true
