@@ -1,14 +1,12 @@
+// Require routes here
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-// Require routes here
 const taskRouter = require('./routes/task_router.js')
 
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use(express.static('server/public'));
-
 //  App.use Routes go here
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('server/public'));
 app.use('/tasks', taskRouter);
 
 const PORT = 5000;

@@ -8,8 +8,9 @@ router.post('/', (req, res) => {
     console.log('in /tasks POST with:', req.body);
     let newTask = req.body;
     console.log(newTask, newTask.task_name, newTask.completed);
-    const queryText = `INSERT INTO "tasks"("task_name", "completed") 
-                                VALUES($1, $2);`;
+    // SQL command to add a new row to our tasks database
+    const queryText = `INSERT INTO "tasks"("task_name", "completed") VALUES($1, $2);`;
+    // sanitized pool query
     pool.query(queryText, [newTask.task_name, newTask.completed])
     .then((response) => {
         console.log('response from database', response);
@@ -22,9 +23,11 @@ router.post('/', (req, res) => {
 
 // GET
 router.get('/', (req, res) => {
+    // SQL command to select all from database
+    // ordered by completed
     let queryText = 'SELECT * FROM "tasks" ORDER BY "completed";';
     pool.query(queryText).then((result) => {
-      // Sends back the results in an object
+      // sends results back to the client as an object
       res.send(result.rows);
     })
     .catch(error => {
@@ -36,6 +39,7 @@ router.get('/', (req, res) => {
 // DELETE
 router.delete('/:id', (req, res) => {
   let taskId = req.params.id;
+  // SQL command to delete row based on id
   let queryText = `DELETE FROM "tasks" WHERE "id" = $1;`;
   pool.query(queryText, [taskId]).then((result) => {
       console.log(result);
@@ -46,14 +50,12 @@ router.delete('/:id', (req, res) => {
   });
 });
 
-
 // PUT
 router.put('/completedYet/:id', (req, res) => {
   let id = req.params.id;
   let completed = req.body.completed;
-
+  // SQL command to update completed value to true
   let queryText = `UPDATE "tasks" SET "completed" = $1 WHERE "id" = $2;`;
-
   pool.query(queryText, [completed, id]).then((result) => {
       console.log(result);
       res.sendStatus(200);
@@ -63,5 +65,4 @@ router.put('/completedYet/:id', (req, res) => {
   });
 });
 
-//this is the same for all route modules
 module.exports = router;

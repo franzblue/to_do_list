@@ -4,49 +4,66 @@ $(document).ready(onReady);
 
 function onReady() {
     console.log('hello from jq');
+    // fire off function to GET tasks from database and append them to the DOM
     getTasks();
+    // event listeners
     $('#submit').on('click', makeTask);
     $('#toDoList').on('click', '.deleteBtn', deleteTask);
     $('#toDoList').on('click', '.completeBtn', updateCompleted);
-    
 }
 
 function getTasks(){
     console.log('in GET tasks');
+    // GET tasks list
     $.ajax({
         method: 'GET',
         url: '/tasks'
     }).then(function (response){
         console.log('response from GET server:', response);
+        // append list to DOM
         appendTasks(response);
     }).catch(function(error){
         console.log(error);
     });
 }
 
-// function to GET taks list and append it to DOM
+// append to DOM
 function appendTasks(array) {
-    console.log('in appendTasks');
+    console.log('in appendTasks', array);
     let el = $('#toDoList');
     el.empty();
     for (let i = 0; i < array.length; i++) {
-        // if(${array[i].id} === true){ toggle.class ???}
-        // you can add a second data table effect if completed
-        el.append(`
-            <tr data-id=${array[i].id}>
+        // this if statement checks if the task is completed
+        // if true, whole row has green background
+        if(array[i].completed === true) {
+            el.append(`
+            <tr  class="completed" data-id=${array[i].id}>
             <td>${array[i].task_name}</td>
-            <td></td>
+            <td>Completed!</td>
             <td><button type="submit" class="deleteBtn">Delete</button></td>
             <td><button type="submit" class="completeBtn">Click when Completed</button></td>
             </tr>
-            `);
+            `)
+        }
+        else {
+            // this section for rows of tasks not yet completed
+            el.append(`
+                <tr data-id=${array[i].id}>
+                <td>${array[i].task_name}</td>
+                <td></td>
+                <td><button type="submit" class="deleteBtn">Delete</button></td>
+                <td><button type="submit" class="completeBtn">Click when Completed</button></td>
+                </tr>
+                `);
+        }
     }
 }
 
-// function to delete appended rows
+// function to delete rows
 function deleteTask() {
-    console.log('clicked delete');
     let taskId = $(this).closest('tr').data('id');
+    console.log('clicked delete on row id: ', taskId);
+    // DELETE request
     $.ajax({
         method: 'DELETE',
         url:`/tasks/${taskId}`
@@ -62,18 +79,27 @@ function deleteTask() {
 // function to bundle inputs into object
 function makeTask() {
     // validation needed --- no blank inputs allowed ******************
-    console.log('in makeTask');
+    if($('#toDoInput').val() === '' || $('#toDoInput').val() === 0 || $('#toDoInput').val() === null) {
+        console.log('toDoInput field empty');
+        alert('Input field is empty')
+        return;
+    }
+    else {
+            console.log('in makeTask');
+    // bundle input field into an object
     let taskObject = {
         task_name: $('#toDoInput').val(),
         completed: false
     }
     console.log('taskObject is:', taskObject);
-       addTask(taskObject);
+    // feed taskObject into database
+    addTask(taskObject);
+    }
 }
  
 // function to POST input object to server
 function addTask(taskObject) {
-    console.log('in addTask, sending to server:', taskObject);
+    console.log('in addTask, sending to server: ', taskObject);
     $.ajax( {
         method: 'POST',
         url: '/tasks',
@@ -87,16 +113,17 @@ function addTask(taskObject) {
 });
 }
 
+// click event to change task to completed = true
 function updateCompleted(){
     let id = $(this).closest('tr').data('id');
     console.log('in PUT request with:', id);
-
     $.ajax({
         method: 'PUT',
         url:`/tasks/completedYet/${id}`,
         data: {completed: true}
     }).then(function(response){
         console.log(response);
+        // fire function to GET tasks and append updates
         getTasks();
     }).catch(function(error){
         console.log(error);

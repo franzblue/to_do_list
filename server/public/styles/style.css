@@ -15,10 +15,22 @@ table th {
     font-weight: normal;
   }
   
-table tr:nth-child(even) {
+/* table tr:nth-child(even) {
   background-color: #efefef;
 }
 
 table tr:nth-child(odd) {
   background-color: #ffffff;
+} */
+
+div {
+  display: flex;
+  justify-content: center;
+}
+.center {
+  width: 800px;
+}
+
+.completed {
+  background-color: #00acb0;
 }
