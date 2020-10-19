@@ -12,8 +12,6 @@ function onReady() {
     $('#toDoList').on('click', '.completeBtn', updateCompleted);
 }
 
-
-
 // function to POST input object to server
 function addTask(taskObject) {
     console.log('in addTask, sending to server: ', taskObject);
@@ -54,8 +52,8 @@ function appendTasks(array) {
                 <tr data-id=${array[i].id}>
                 <td>${array[i].task_name}</td>
                 <td></td>
-                <td><button type="submit" class="deleteBtn">Delete</button></td>
-                <td><button type="submit" class="completeBtn">Click when Completed</button></td>
+                <td><button type="submit" class="deleteBtn btn-warning">Delete</button></td>
+                <td><button type="submit" class="completeBtn btn-success">Click when Completed</button></td>
                 </tr>
             `);
         }
