@@ -41,8 +41,8 @@ function appendTasks(array) {
                 <tr  class="completed" data-id=${array[i].id}>
                 <td>${array[i].task_name}</td>
                 <td>Completed!</td>
-                <td><button type="submit" class="deleteBtn btn-warning">Delete</button></td>
-                <td><button type="submit" class="completeBtn btn-success">Click when Completed</button></td>
+                <td><button type="submit" class="deleteBtn btn btn-warning">Delete</button></td>
+                <td><button type="submit" class="completeBtn btn btn-success">Click when Completed</button></td>
                 </tr>
             `)
         }
@@ -52,8 +52,8 @@ function appendTasks(array) {
                 <tr data-id=${array[i].id}>
                 <td>${array[i].task_name}</td>
                 <td></td>
-                <td><button type="submit" class="deleteBtn btn-warning">Delete</button></td>
-                <td><button type="submit" class="completeBtn btn-success">Click when Completed</button></td>
+                <td><button type="submit" class="deleteBtn btn btn-warning">Delete</button></td>
+                <td><button type="submit" class="completeBtn btn btn-success">Click when Completed</button></td>
                 </tr>
             `);
         }
