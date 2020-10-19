@@ -3,7 +3,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const taskRouter = require('./routes/task_router.js')
-const { default: swal } = require("sweetalert");
 
 //  App.use Routes go here
 app.use(bodyParser.urlencoded({ extended: true }));

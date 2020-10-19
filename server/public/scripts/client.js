@@ -64,6 +64,7 @@ function appendTasks(array) {
 
 // function to delete rows
 function deleteTask() {
+    // sweet alert verifying if user really wants to delete task
     swal({
         title: "Are you sure?",
         text: "Once deleted, you will not accomplish this task!",
