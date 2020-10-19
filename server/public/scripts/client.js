@@ -75,7 +75,7 @@ function deleteTask() {
       .then((willDelete) => {
         if (willDelete) {
           swal("Poof! Your task has been deleted!", {
-            icon: "success",
+            icon: "info",
           });
             let taskId = $(this).closest('tr').data('id');
             console.log('clicked delete on row id: ', taskId);
@@ -136,6 +136,8 @@ function makeTask() {
 
 // click event to change task to completed = true
 function updateCompleted(){
+    // sweetalert succes!
+    swal("Good job!", "You completed a task!", "success");
     let id = $(this).closest('tr').data('id');
     console.log('in PUT request with:', id);
     $.ajax({
