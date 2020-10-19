@@ -12,6 +12,8 @@ function onReady() {
     $('#toDoList').on('click', '.completeBtn', updateCompleted);
 }
 
+
+
 // function to POST input object to server
 function addTask(taskObject) {
     console.log('in addTask, sending to server: ', taskObject);
@@ -62,19 +64,36 @@ function appendTasks(array) {
 
 // function to delete rows
 function deleteTask() {
-    let taskId = $(this).closest('tr').data('id');
-    console.log('clicked delete on row id: ', taskId);
-    // DELETE request
-    $.ajax({
-        method: 'DELETE',
-        url:`/tasks/${taskId}`
-    }).then(function(response){
-        console.log(' delete server response', response);
-        // append new task list
-        getTasks();
-    }).catch(function(error){
-        console.log(error);
-    });
+    // sweet alert verifying if user really wants to delete task
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not accomplish this task!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          swal("Poof! Your task has been deleted!", {
+            icon: "success",
+          });
+            let taskId = $(this).closest('tr').data('id');
+            console.log('clicked delete on row id: ', taskId);
+            // DELETE request
+            $.ajax({
+                method: 'DELETE',
+                url:`/tasks/${taskId}`
+            }).then(function(response){
+                console.log(' delete server response', response);
+                // append new task list
+                getTasks();
+            }).catch(function(error){
+                console.log(error);
+            });
+        } else {
+          swal("Your task is safe, now get to work!");
+        }
+      });
 }
 
 // function to GET task list from databse

@@ -1,6 +1,6 @@
 header {
   text-align: center;
-    background-color: #00acb0;
+  background-color: #00acb0;
 }
 
 table, th, td {
@@ -14,14 +14,6 @@ table th {
     background-color: #d2d2d2;
     font-weight: normal;
   }
-  
-/* table tr:nth-child(even) {
-  background-color: #efefef;
-}
-
-table tr:nth-child(odd) {
-  background-color: #ffffff;
-} */
 
 .completed {
   background-color: #00acb0;
