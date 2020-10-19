@@ -38,12 +38,12 @@ function appendTasks(array) {
         // if true, whole row has green background
         if(array[i].completed === true) {
             el.append(`
-            <tr  class="completed" data-id=${array[i].id}>
-            <td>${array[i].task_name}</td>
-            <td>Completed!</td>
-            <td><button type="submit" class="deleteBtn">Delete</button></td>
-            <td><button type="submit" class="completeBtn">Click when Completed</button></td>
-            </tr>
+                <tr  class="completed" data-id=${array[i].id}>
+                <td>${array[i].task_name}</td>
+                <td>Completed!</td>
+                <td><button type="submit" class="deleteBtn">Delete</button></td>
+                <td><button type="submit" class="completeBtn">Click when Completed</button></td>
+                </tr>
             `)
         }
         else {
@@ -55,7 +55,7 @@ function appendTasks(array) {
                 <td><button type="submit" class="deleteBtn">Delete</button></td>
                 <td><button type="submit" class="completeBtn">Click when Completed</button></td>
                 </tr>
-                `);
+            `);
         }
     }
 }

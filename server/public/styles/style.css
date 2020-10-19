@@ -23,14 +23,12 @@ table tr:nth-child(odd) {
   background-color: #ffffff;
 } */
 
-div {
-  display: flex;
-  justify-content: center;
-}
-.center {
-  width: 800px;
-}
-
 .completed {
   background-color: #00acb0;
 }
+
+body {
+display: inline-block; 
+text-align: right;
+}
+
