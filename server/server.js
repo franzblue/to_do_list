@@ -9,8 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('server/public'));
 app.use('/tasks', taskRouter);
 
-var port = process.env.PORT || 5000;
-const PORT = 5000;
+var PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log('up and running on port:', PORT);
 });
